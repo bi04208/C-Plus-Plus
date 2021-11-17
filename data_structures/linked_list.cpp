@@ -18,114 +18,32 @@
 #include <memory>
 #include <string>
 
-/**
- * @namespace data_structures
- * @brief Data Structures algorithms
- */
-namespace data_structures {
-
-/**
- * @namespace linked_list
- * @brief Functions for singly linked list algorithm
- */
-namespace linked_list {
-
-/**
- * This function checks if the string passed consists
- * of only digits.
- * @param s To be checked if s contains only integers
- * @returns true if there are only only digits present in the string
- * @returns false if any other character is found
- */
-bool isDigit(const std::string& s) {
-    // function statements here
-    for (char i : s) {
-        if (!isdigit(i)) {
-            return false;
-        }
-    }
-    return true;
-}
-
-/**
- * A link class containing a value and pointer to another link
- */
-class link {
- private:
-    int pvalue;                   ///< value of the current link
-    std::shared_ptr<link> psucc;  ///< pointer to the next value on the list
-
- public:
-    /**
-     * function returns the integer value stored in the link.
-     * @returns the integer value stored in the link.
-     */
-    int val() { return pvalue; }
-
-    /**
-     * function returns the pointer to next link
-     * @returns the pointer to the next link
-     * */
-    std::shared_ptr<link>& succ() { return psucc; }
-
-    /**
-     * Creates link with provided value and pointer to next link
-     * @param value is the integer stored in the link
-     */
-    explicit link(int value = 0) : pvalue(value), psucc(nullptr) {}
-};
-
-/**
- * A list class containing a sequence of links
- */
-class list {
- private:
-    std::shared_ptr<link> first;  ///< link before the actual first element
-    std::shared_ptr<link> last;   ///< last link on the list
- public:
-    /**
-     * List constructor. Initializes the first and last link.
-     */
-    list() {
-        // Initialize the first link
-        first = std::make_shared<link>();
-        // Initialize the last link with the first link
-        last = nullptr;
-    }
-
-    bool isEmpty();
-
-    void push_back(int new_elem);
-    void push_front(int new_elem);
-    void erase(int old_elem);
-    void display();
-    std::shared_ptr<link> search(int find_elem);
-    void reverse();
-};
+#include "list.hpp"
 
 /**
  * function checks if list is empty
  * @returns true if list is empty
  * @returns false if list is not empty
  */
-bool list::isEmpty() {
+template <typename T>
+bool data_structures::list<T>::isEmpty() {
     if (last == nullptr) {
         return true;
     } else {
         return false;
     }
 }
-
 /**
  * function adds new element to the end of the list
  * @param new_elem to be added to the end of the list
  */
-void list::push_back(int new_elem) {
+template <typename T>
+void data_structures::list<T>::push_back(T new_elem) {
     if (isEmpty()) {
-        first->succ() = std::make_shared<link>(new_elem);
+        first->succ() = std::make_shared<link<T> >(new_elem);
         last = first->succ();
     } else {
-        last->succ() = std::make_shared<link>(new_elem);
+        last->succ() = std::make_shared<link<T> >(new_elem);
         last = last->succ();
     }
 }
@@ -134,12 +52,14 @@ void list::push_back(int new_elem) {
  * function adds new element to the beginning of the list
  * @param new_elem to be added to front of the list
  */
-void list::push_front(int new_elem) {
+template <typename T>
+void data_structures::list<T>::push_front(T new_elem) {
     if (isEmpty()) {
         first->succ() = std::make_shared<link>(new_elem);
         last = first->succ();
     } else {
-        std::shared_ptr<link> t = std::make_shared<link>(new_elem);
+        std::shared_ptr<data_structures::link<T> > t =
+            std::make_shared<link>(new_elem);
         t->succ() = first->succ();
         first->succ() = t;
     }
@@ -149,13 +69,14 @@ void list::push_front(int new_elem) {
  * function erases old element from the list
  * @param old_elem to be erased from the list
  */
-void list::erase(int old_elem) {
+template <typename T>
+void data_structures::list<T>::erase(T old_elem) {
     if (isEmpty()) {
         std::cout << "List is Empty!";
         return;
     }
-    std::shared_ptr<link> t = first;
-    std::shared_ptr<link> to_be_removed = nullptr;
+    std::shared_ptr<link<T> > t = first;
+    std::shared_ptr<link<T> > to_be_removed = nullptr;
     while (t != last && t->succ()->val() != old_elem) {
         t = t->succ();
     }
@@ -169,7 +90,7 @@ void list::erase(int old_elem) {
     if (t->succ() == nullptr) {
         last = t;
     }
-    if (first == last){
+    if (first == last) {
         last = nullptr;
     }
 }
@@ -178,12 +99,13 @@ void list::erase(int old_elem) {
  * function displays all the elements in the list
  * @returns 'void'
  */
-void list::display() {
+template <typename T>
+void data_structures::list<T>::display() {
     if (isEmpty()) {
         std::cout << "List is Empty!";
         return;
     }
-    std::shared_ptr<link> t = first;
+    std::shared_ptr<link<T> > t = first;
     while (t->succ() != nullptr) {
         std::cout << t->succ()->val() << "\t";
         t = t->succ();
@@ -194,12 +116,14 @@ void list::display() {
  * function searchs for @param find_elem in the list
  * @param find_elem to be searched for in the list
  */
-std::shared_ptr<link> list::search(int find_elem) {
+template <typename T>
+std::shared_ptr<data_structures::link<T> > data_structures::list<T>::search(
+    T find_elem) {
     if (isEmpty()) {
         std::cout << "List is Empty!";
         return nullptr;
     }
-    std::shared_ptr<link> t = first;
+    std::shared_ptr<link<T> > t = first;
     while (t != last && t->succ()->val() != find_elem) {
         t = t->succ();
     }
@@ -210,9 +134,6 @@ std::shared_ptr<link> list::search(int find_elem) {
     std::cout << "Element was found\n";
     return t->succ();
 }
-}  // namespace linked_list
-}  // namespace data_structures
-
 /**
  * Main function:
  * Allows the user add and delete values from the list.
@@ -220,7 +141,7 @@ std::shared_ptr<link> list::search(int find_elem) {
  * @returns 0 on exit
  */
 int main() {
-    data_structures::linked_list::list l;
+    data_structures::list<int> l;
     int choice = 0;
     int x = 0;
     std::string s;
@@ -237,7 +158,7 @@ int main() {
                 std::cout << "\nEnter the element to be inserted : ";
                 std::cin >> s;
 
-                if (data_structures::linked_list::isDigit(s)) {
+                if (data_structures::isDigit(s)) {
                     x = std::stoi(s);
                     l.push_back(x);
                 } else {
@@ -247,7 +168,7 @@ int main() {
             case 2:
                 std::cout << "\nEnter the element to be removed : ";
                 std::cin >> s;
-                if (data_structures::linked_list::isDigit(s)) {
+                if (data_structures::isDigit(s)) {
                     x = std::stoi(s);
                     l.erase(x);
                 } else {
@@ -257,9 +178,9 @@ int main() {
             case 3:
                 std::cout << "\nEnter the element to be searched : ";
                 std::cin >> s;
-                if (data_structures::linked_list::isDigit(s)) {
+                if (data_structures::isDigit(s)) {
                     x = std::stoi(s);
-                    std::shared_ptr<data_structures::linked_list::link> found =
+                    std::shared_ptr<data_structures::link<int> > found =
                         l.search(x);
                 } else {
                     std::cout << "Wrong Input!\n";

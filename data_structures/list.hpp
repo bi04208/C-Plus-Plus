@@ -4,12 +4,11 @@
 #include <cassert>   /// for assert
 #include <iostream>  /// for io operations
 
-
 namespace data_structures {
 
 template <typename T>
 class list_array {
-public:
+ public:
     list_array() = default;
 
     /**
@@ -62,26 +61,96 @@ public:
     void sort();
 
     /**
-    * @brief Get top element
-    * @returns top element
-    */
-    T size() {
-        return top;
-    }
+     * @brief Get top element
+     * @returns top element
+     */
+    T size() { return top; }
 
     /**
-    * @brief Get whether list is sorted or not
-    * @returns bool
-    */
-    bool isSortedList() {
-        return isSorted;
-    }
+     * @brief Get whether list is sorted or not
+     * @returns bool
+     */
+    bool isSortedList() { return isSorted; }
 
-private:
+ private:
     std::array<T, 50> data;
     uint64_t top = 0;
     bool isSorted = false;
-}; // class list_array
+};  // class list_array
 
+/**
+ * A link class containing a value and pointer to another link
+ */
+template <typename T>
+class link {
+ private:
+    T pvalue;                     ///< value of the current link
+    std::shared_ptr<link> psucc;  ///< pointer to the next value on the list
 
-} // namespace data_structures
+ public:
+    /**
+     * function returns the value stored in the link.
+     * @returns the value stored in the link.
+     */
+    T val() { return pvalue; }
+
+    /**
+     * function returns the pointer to next link
+     * @returns the pointer to the next link
+     * */
+    std::shared_ptr<link>& succ() { return psucc; }
+
+    /**
+     * Creates link with provided value and pointer to next link
+     * @param value is the integer stored in the link
+     */
+    explicit link(T value = 0) : pvalue(value), psucc(nullptr) {}
+};
+
+/**
+ * A list class containing a sequence of links
+ */
+template <typename T>
+class list {
+ private:
+    std::shared_ptr<link<T> > first;  ///< link before the actual first element
+    std::shared_ptr<link<T> > last;   ///< last link on the list
+ public:
+    /**
+     * List constructor. Initializes the first and last link.
+     */
+    list() {
+        // Initialize the first link
+        first = std::make_shared<link<T> >();
+        // Initialize the last link with the first link
+        last = nullptr;
+    }
+
+    bool isEmpty();
+
+    void push_back(T new_elem);
+    void push_front(T new_elem);
+    void erase(T old_elem);
+    void display();
+    std::shared_ptr<link<T> > search(T find_elem);
+    void reverse();
+};
+
+/**
+ * This function checks if the string passed consists
+ * of only digits.
+ * @param s To be checked if s contains only integers
+ * @returns true if there are only only digits present in the string
+ * @returns false if any other character is found
+ */
+bool isDigit(const std::string& s) {
+    // function statements here
+    for (char i : s) {
+        if (!isdigit(i)) {
+            return false;
+        }
+    }
+    return true;
+}
+
+}  // namespace data_structures
