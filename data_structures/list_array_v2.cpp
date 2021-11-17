@@ -17,11 +17,11 @@
 #include <array>     /// for std::array
 #include <cassert>   /// for assert
 #include <iostream>  /// for io operations
-#include "list.hpp"
 
+#include "data_structure.hpp"
 
 template <typename T>
-void data_structures::list_array<T>::insert(const T val) { // function insert
+void data_structures::list_array<T>::insert(const T val) {  // function insert
     if (top == 49) {
         std::cout << "\n Overflow";
         return;
@@ -29,15 +29,14 @@ void data_structures::list_array<T>::insert(const T val) { // function insert
 
     // if list is not sorted, insert at the last
     // otherwise place it to correct position
-    if(!isSorted) {
+    if (!isSorted) {
         data[top] = val;
         top++;
-    }
-    else {
-        int pos = 0; // Initialize the index variable
-            
+    } else {
+        int pos = 0;  // Initialize the index variable
+
         // Going through each element and find correct position for element
-        for (int i = 0; i < top - 1; i++){
+        for (int i = 0; i < top - 1; i++) {
             // check for the correct position
             if (data[i] <= val && val <= data[i + 1]) {
                 pos = i + 1;  // assign correct pos to the index var
@@ -52,14 +51,13 @@ void data_structures::list_array<T>::insert(const T val) { // function insert
         for (int i = top; i > pos; i--) {
             data[i] = data[i - 1];
         }
-        top++;  // Increment the value of top.
+        top++;            // Increment the value of top.
         data[pos] = val;  // Assign the value to the correct index in the array
     }
-} // function insert
-
+}  // function insert
 
 template <typename T>
-void data_structures::list_array<T>::remove(const T val) { //function remove
+void data_structures::list_array<T>::remove(const T val) {  // function remove
     int pos = search(val);  // search the index of the value
     // if search returns -1, element does not present in the list
     if (pos == -1) {
@@ -74,14 +72,13 @@ void data_structures::list_array<T>::remove(const T val) { //function remove
     }
     top--;  // decrement the top variable to maintain last index
 
-} //function remove
-
+}  // function remove
 
 template <typename T>
-int data_structures::list_array<T>::search(const T val) { // function search
+int data_structures::list_array<T>::search(const T val) {  // function search
     int pos;  // pos variable to store index value of element.
-            // if list is sorted, binary search works efficiently else linear search
-            // is the only option
+              // if list is sorted, binary search works efficiently else linear
+              // search is the only option
     if (isSorted) {
         pos = BinarySearch(0, top - 1, val);
     } else {
@@ -96,11 +93,11 @@ int data_structures::list_array<T>::search(const T val) { // function search
     }
     // return the index of element or -1.
     return pos;
-} // function search
-
+}  // function search
 
 template <typename T>
-int data_structures::list_array<T>::BinarySearch(const int first, const int last, const T val){ // function BinarySearch
+int data_structures::list_array<T>::BinarySearch(
+    const int first, const int last, const T val) {  // function BinarySearch
     // If both pointer cross each other means no element present in the list
     // which is equal to the val
     if (last < first) {
@@ -121,8 +118,7 @@ int data_structures::list_array<T>::BinarySearch(const int first, const int last
 
     std::cerr << __func__ << ":" << __LINE__ << ": Undefined condition\n";
     return -1;
-} // function BinarySearch
-
+}  // function BinarySearch
 
 template <typename T>
 int data_structures::list_array<T>::LinearSearch(const T val) {
@@ -136,19 +132,17 @@ int data_structures::list_array<T>::LinearSearch(const T val) {
     return -1;
 }
 
-
 template <typename T>
-void data_structures::list_array<T>::print_list() { // function print_list
+void data_structures::list_array<T>::print_list() {  // function print_list
     // Going through each element in the list
     std::cout << '\n';
     for (int i = 0; i < top; i++) {
         std::cout << data[i] << " ";  // print the element
     }
-} // function print_list
-
+}  // function print_list
 
 template <typename T>
-void data_structures::list_array<T>::sort() { // function sort
+void data_structures::list_array<T>::sort() {  // function sort
     // Going through each element in the list
     for (int i = 0; i < top; i++) {
         int min_idx = i;  // Initialize the min variable
@@ -163,8 +157,7 @@ void data_structures::list_array<T>::sort() { // function sort
     }
     // mark isSorted variable as true
     isSorted = true;
-} // function sort
-
+}  // function sort
 
 /**
  * @brief Test implementations

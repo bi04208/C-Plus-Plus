@@ -18,7 +18,7 @@
 #include <memory>
 #include <string>
 
-#include "list.hpp"
+#include "data_structure.hpp"
 
 /**
  * function checks if list is empty
