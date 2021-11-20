@@ -1,62 +1,62 @@
-#include <iostream>
 
-int *stack;
-int stack_idx = 0, stack_size;
 
-void push(int x) {
-    if (stack_idx == stack_size) {
+
+#include "data_structure.hpp"
+
+template <typename T>
+void data_structures::stack_array<T>::push(T x) {
+    if (isFull() == true) {
         std::cout << "\nOverflow";
     } else {
-        stack[stack_idx++] = x;
+        data[++stack_idx] = x;
     }
 }
 
-void pop() {
-    if (stack_idx == 0) {
-        std::cout << "\nUnderflow";
+template <typename T>
+T data_structures::stack_array<T>::pop() {
+    if (isEmpty() == true) {
+        std::cout << "\nStack is empty;";
     } else {
-        std::cout << "\n" << stack[--stack_idx] << " deleted";
+        std::cout << "\n" << data[stack_idx] << "deleted from stack";
+        return data[stack_idx--];
     }
 }
 
-void show() {
-    for (int i = 0; i < stack_idx; i++) {
-        std::cout << stack[i] << "\n";
+template <typename T>
+void data_structures::stack_array<T>::print_stack() {
+    std::cout << "stack" << std::endl;
+    for (int i = 0; i < size(); i++) {
+        std::cout << data[i] << std::endl;
     }
 }
 
-void topmost() { std::cout << "\nTopmost element: " << stack[stack_idx - 1]; }
-void bottom() { std::cout << "\nBottom element: " << stack[0]; } // If we need access to first element without using pop command 
 int main() {
-    std::cout << "\nEnter stack_size of stack : ";
-    std::cin >> stack_size;
-    stack = new int[stack_size];
+    data_structures::stack_array<int> stack;
+
     int ch, x;
     do {
         std::cout << "\n0. Exit";
         std::cout << "\n1. Push";
         std::cout << "\n2. Pop";
         std::cout << "\n3. Print";
-        std::cout << "\n4. Print topmost element:";
-        std::cout << "\n5. Print Bottom element:";
+        std::cout << "\n4. Print topmost element";
+        std::cout << "\n5. Print Bottom element";
         std::cout << "\nEnter Your Choice : ";
         std::cin >> ch;
         if (ch == 1) {
             std::cout << "\nInsert : ";
             std::cin >> x;
-            push(x);
+            stack.push(x);
         } else if (ch == 2) {
-            pop();
+            stack.pop();
         } else if (ch == 3) {
-            show();
+            stack.print_stack();
         } else if (ch == 4) {
-            topmost();
+            stack.peek();
         } else if(ch == 5) {
-            bottom();
+            stack.bottom();
         }
     } while (ch != 0);
-
-    delete[] stack;
 
     return 0;
 }
