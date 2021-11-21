@@ -3,6 +3,8 @@
 #include <array>     /// for std::array
 #include <cassert>   /// for assert
 #include <iostream>  /// for io operations
+#include <cstdlib>
+#include <cstdio>
 
 namespace data_structures {
 
@@ -210,6 +212,45 @@ public:
 private:
     std::array<T, 50> data;
     int stack_idx;
+};
+
+template <typename T>
+struct node {
+    T val;
+    node *next;
+};
+
+template <typename T>
+class stack_linked_list {
+public:
+    stack_linked_list() { top_var = NULL; stack_size = 0;}
+
+    /*
+     * @brief push element x into stack
+     * @param val element that will be inserted.
+     * @return void
+     */
+    void push(T x);
+
+    /*
+     * @brief pop element from stack and remove the element
+     * @return element from stack
+     */
+    T pop();
+
+    /*
+     * @brief print every element in the stack
+     * @return void
+     */
+    void print_stack();
+
+    int size() { return stack_size; }
+
+    bool isEmpty() { return stack_size == 0; }
+
+private:
+    node<T> *top_var;
+    int stack_size;
 };
 
 }  // namespace data_structures
