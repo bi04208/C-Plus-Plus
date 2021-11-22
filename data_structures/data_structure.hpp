@@ -170,25 +170,13 @@ class stack_array {
      * @brief return element from top of the stack but not removed
      * @return element from top
      */
-    T peek() {
-        if (isEmpty() == true) {
-            std::cout << "\nStack is empty;";
-        }
-        std::cout << "\nTopmost element: " << data[stack_idx];
-        return data[stack_idx];
-    }
+    T peek();
 
     /*
      * @brief return element at the bottom of the stack
      * @return element data[0]
      */
-    T bottom() {
-        if (isEmpty() == true) {
-            std::cout << "\nStack is empty;";
-        }
-        std::cout << "\nBottom element: " << data[0];
-        return data[0];
-    }
+    T bottom();
 
     int size() { return stack_idx + 1; }
 

@@ -2,6 +2,7 @@
 
 
 #include "data_structure.hpp"
+#include <cassert>
 
 template <typename T>
 void data_structures::stack_array<T>::push(T x) {
@@ -25,38 +26,72 @@ T data_structures::stack_array<T>::pop() {
 template <typename T>
 void data_structures::stack_array<T>::print_stack() {
     std::cout << "stack" << std::endl;
-    for (int i = 0; i < size(); i++) {
-        std::cout << data[i] << std::endl;
+    for (int i = size() - 1; i >= 0; i--) {
+        std::cout << data[i] << " ";
     }
+    std::cout << std::endl;
+}
+
+template <typename T>
+T data_structures::stack_array<T>::peek() {
+    if (isEmpty() == true) {
+        std::cout << "\nStack is empty;";
+    }
+    std::cout << "\nTopmost element: " << data[stack_idx];
+    return data[stack_idx];
+}
+
+template <typename T>
+T data_structures::stack_array<T>::bottom() {
+    if (isEmpty() == true) {
+        std::cout << "\nStack is empty;";
+    }
+    std::cout << "\nBottom element: " << data[0];
+    return data[0];
 }
 
 int main() {
-    data_structures::stack_array<int> stack;
+    data_structures::stack_array<int> S_int;
+    data_structures::stack_array<double> S_double;
 
-    int ch, x;
-    do {
-        std::cout << "\n0. Exit";
-        std::cout << "\n1. Push";
-        std::cout << "\n2. Pop";
-        std::cout << "\n3. Print";
-        std::cout << "\n4. Print topmost element";
-        std::cout << "\n5. Print Bottom element";
-        std::cout << "\nEnter Your Choice : ";
-        std::cin >> ch;
-        if (ch == 1) {
-            std::cout << "\nInsert : ";
-            std::cin >> x;
-            stack.push(x);
-        } else if (ch == 2) {
-            stack.pop();
-        } else if (ch == 3) {
-            stack.print_stack();
-        } else if (ch == 4) {
-            stack.peek();
-        } else if(ch == 5) {
-            stack.bottom();
-        }
-    } while (ch != 0);
+    std::cout << "\nTEST integer type" << std::endl;
+    // Push testing
+    S_int.push(9);
+    S_int.push(11);
+    S_int.push(7);
+    S_int.push(3);
+    assert(S_int.size() == 4);
+    S_int.print_stack();
+
+    // Pop testing
+    S_int.pop();
+    S_int.pop();
+    assert(S_int.size() == 2);
+    
+    // Peek, bottom testing
+    S_int.peek();
+    S_int.bottom();
+
+
+    std::cout << "\n\nTEST double type" << std::endl;
+    // Push testing
+    S_double.push(9.3);
+    S_double.push(11.5);
+    S_double.push(7.6);
+    S_double.push(3.11);
+    S_double.push(1.52);
+    assert(S_double.size() == 5);
+    S_double.print_stack();
+
+    // Pop testing
+    S_double.pop();
+    S_double.pop();
+    assert(S_double.size() == 3);
+    
+    // Peek, bottom testing
+    S_double.peek();
+    S_double.bottom();
+
 
     return 0;
 }
