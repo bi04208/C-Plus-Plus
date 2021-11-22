@@ -1,10 +1,10 @@
 
 
-#include <array>     /// for std::array
-#include <cassert>   /// for assert
-#include <iostream>  /// for io operations
-#include <cstdlib>
+#include <array>    /// for std::array
+#include <cassert>  /// for assert
 #include <cstdio>
+#include <cstdlib>
+#include <iostream>  /// for io operations
 
 namespace data_structures {
 
@@ -100,7 +100,7 @@ class link {
      * function returns the pointer to next link
      * @returns the pointer to the next link
      * */
-    std::shared_ptr<link>& succ() { return psucc; }
+    std::shared_ptr<link> &succ() { return psucc; }
 
     /**
      * Creates link with provided value and pointer to next link
@@ -117,6 +117,8 @@ class list {
  private:
     std::shared_ptr<link<T> > first;  ///< link before the actual first element
     std::shared_ptr<link<T> > last;   ///< last link on the list
+    int list_size;
+
  public:
     /**
      * List constructor. Initializes the first and last link.
@@ -126,6 +128,7 @@ class list {
         first = std::make_shared<link<T> >();
         // Initialize the last link with the first link
         last = nullptr;
+        list_size = 0;
     }
 
     bool isEmpty();
@@ -133,31 +136,15 @@ class list {
     void push_back(T new_elem);
     void push_front(T new_elem);
     void erase(T old_elem);
-    void display();
-    std::shared_ptr<link<T> > search(T find_elem);
+    void print_list();
+    int search(T find_elem);
     void reverse();
+    int size() { return list_size; }
 };
-
-/**
- * This function checks if the string passed consists
- * of only digits.
- * @param s To be checked if s contains only integers
- * @returns true if there are only only digits present in the string
- * @returns false if any other character is found
- */
-bool isDigit(const std::string& s) {
-    // function statements here
-    for (char i : s) {
-        if (!isdigit(i)) {
-            return false;
-        }
-    }
-    return true;
-}
 
 template <typename T>
 class stack_array {
-public:
+ public:
     stack_array() { stack_idx = -1; }
 
     /*
@@ -181,13 +168,13 @@ public:
 
     /*
      * @brief return element from top of the stack but not removed
-     * @return element from top 
+     * @return element from top
      */
-    T peek() { 
+    T peek() {
         if (isEmpty() == true) {
             std::cout << "\nStack is empty;";
         }
-        std::cout << "\nTopmost element: " << data[stack_idx]; 
+        std::cout << "\nTopmost element: " << data[stack_idx];
         return data[stack_idx];
     }
 
@@ -195,7 +182,7 @@ public:
      * @brief return element at the bottom of the stack
      * @return element data[0]
      */
-    T bottom() { 
+    T bottom() {
         if (isEmpty() == true) {
             std::cout << "\nStack is empty;";
         }
@@ -209,7 +196,7 @@ public:
 
     bool isFull() { return stack_idx == 49; }
 
-private:
+ private:
     std::array<T, 50> data;
     int stack_idx;
 };
@@ -222,8 +209,11 @@ struct node {
 
 template <typename T>
 class stack_linked_list {
-public:
-    stack_linked_list() { top_var = NULL; stack_size = 0;}
+ public:
+    stack_linked_list() {
+        top_var = NULL;
+        stack_size = 0;
+    }
 
     /*
      * @brief push element x into stack
@@ -248,7 +238,7 @@ public:
 
     bool isEmpty() { return stack_size == 0; }
 
-private:
+ private:
     node<T> *top_var;
     int stack_size;
 };

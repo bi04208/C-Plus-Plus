@@ -100,7 +100,7 @@ void data_structures::list<T>::erase(T old_elem) {
  * @returns 'void'
  */
 template <typename T>
-void data_structures::list<T>::display() {
+void data_structures::list<T>::print_list() {
     if (isEmpty()) {
         std::cout << "List is Empty!";
         return;
@@ -115,24 +115,26 @@ void data_structures::list<T>::display() {
 /**
  * function searchs for @param find_elem in the list
  * @param find_elem to be searched for in the list
+ * @return index of find_elem
  */
 template <typename T>
-std::shared_ptr<data_structures::link<T> > data_structures::list<T>::search(
-    T find_elem) {
-    if (isEmpty()) {
+int data_structures::list<T>::search(T find_elem) {
+    int idx = 0;
+    if (isEmpty() == true) {
         std::cout << "List is Empty!";
-        return nullptr;
+        return -1;
     }
     std::shared_ptr<link<T> > t = first;
     while (t != last && t->succ()->val() != find_elem) {
         t = t->succ();
+        idx++;
     }
     if (t == last) {
         std::cout << "Element not found\n";
-        return nullptr;
+        return -1;
     }
     std::cout << "Element was found\n";
-    return t->succ();
+    return idx;
 }
 /**
  * Main function:
@@ -141,59 +143,33 @@ std::shared_ptr<data_structures::link<T> > data_structures::list<T>::search(
  * @returns 0 on exit
  */
 int main() {
-    data_structures::list<int> l;
-    int choice = 0;
-    int x = 0;
-    std::string s;
-    do {
-        std::cout << "\n1. Insert";
-        std::cout << "\n2. Delete";
-        std::cout << "\n3. Search";
-        std::cout << "\n4. Print";
-        std::cout << "\n0. Exit";
-        std::cout << "\n\nEnter you choice : ";
-        std::cin >> choice;
-        switch (choice) {
-            case 1:
-                std::cout << "\nEnter the element to be inserted : ";
-                std::cin >> s;
+    data_structures::list<int> L_int;
 
-                if (data_structures::isDigit(s)) {
-                    x = std::stoi(s);
-                    l.push_back(x);
-                } else {
-                    std::cout << "Wrong Input!\n";
-                }
-                break;
-            case 2:
-                std::cout << "\nEnter the element to be removed : ";
-                std::cin >> s;
-                if (data_structures::isDigit(s)) {
-                    x = std::stoi(s);
-                    l.erase(x);
-                } else {
-                    std::cout << "Wrong Input!\n";
-                }
-                break;
-            case 3:
-                std::cout << "\nEnter the element to be searched : ";
-                std::cin >> s;
-                if (data_structures::isDigit(s)) {
-                    x = std::stoi(s);
-                    std::shared_ptr<data_structures::link<int> > found =
-                        l.search(x);
-                } else {
-                    std::cout << "Wrong Input!\n";
-                }
-                break;
-            case 4:
-                l.display();
-                std::cout << "\n";
-                break;
-            default:
-                std::cout << "Invalid Input\n" << std::endl;
-                break;
-        }
-    } while (choice != 0);
+    std::cout << "\nTEST integer type" << std::endl;
+    // Insert testing
+    L_int.push_back(11);
+    L_int.push_back(12);
+    L_int.push_back(15);
+    L_int.push_back(10);
+    assert(L_int.size() == 4);
+
+    L_int.push_front(12);
+    L_int.push_front(20);
+    L_int.push_front(18);
+    assert(L_int.size() == 7);
+    L_int.print_list();  // To print the array
+
+    // Remove testing
+    L_int.erase(12);  // Remove Duplicate value in the list
+    L_int.erase(15);  // Remove the existing value in the list
+    assert(L_int.size() == 5);
+    L_int.erase(50);  // Try to remove the non-existing value in the list
+    assert(L_int.size() == 5);
+
+    // LinearSearch testing
+    assert(L_int.search(11) == 0);  // search for the existing element
+    assert(L_int.search(12) == 2);
+    assert(L_int.search(50) == -1);  // search for the non-existing element
+
     return 0;
 }

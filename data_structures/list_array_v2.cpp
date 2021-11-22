@@ -164,41 +164,80 @@ void data_structures::list_array<T>::sort() {  // function sort
  * @returns void
  */
 static void test() {
-    data_structures::list_array<uint64_t> L;
+    data_structures::list_array<uint64_t> L_int;
+    data_structures::list_array<double> L_double;
 
+    // Integer type test
+    std::cout << "\nTEST integer type" << std::endl;
     // Insert testing
-    L.insert(11);
-    L.insert(12);
-    assert(L.size() == 2);
-    L.insert(15);
-    L.insert(10);
-    L.insert(12);
-    L.insert(20);
-    L.insert(18);
-    assert(L.size() == 7);
-    L.print_list();  // To print the array
+    L_int.insert(11);
+    L_int.insert(12);
+    assert(L_int.size() == 2);
+    L_int.insert(15);
+    L_int.insert(10);
+    L_int.insert(12);
+    L_int.insert(20);
+    L_int.insert(18);
+    assert(L_int.size() == 7);
+    L_int.print_list();  // To print the array
 
     // Remove testing
-    L.remove(12);  // Remove Duplicate value in the list
-    L.remove(15);  // Remove the existing value in the list
-    assert(L.size() == 5);
-    L.remove(50);  // Try to remove the non-existing value in the list
-    assert(L.size() == 5);
+    L_int.remove(12);  // Remove Duplicate value in the list
+    L_int.remove(15);  // Remove the existing value in the list
+    assert(L_int.size() == 5);
+    L_int.remove(50);  // Try to remove the non-existing value in the list
+    assert(L_int.size() == 5);
 
     // LinearSearch testing
-    assert(L.search(11) == 0);  // search for the existing element
-    assert(L.search(12) == 2);
-    assert(L.search(50) == -1);  // search for the non-existing element
+    assert(L_int.search(11) == 0);  // search for the existing element
+    assert(L_int.search(12) == 2);
+    assert(L_int.search(50) == -1);  // search for the non-existing element
 
     // Sort testing
-    L.sort();
-    assert(L.isSortedList() == true);
-    L.print_list();
+    L_int.sort();
+    assert(L_int.isSortedList() == true);
+    L_int.print_list();
 
     // BinarySearch testing
-    assert(L.search(11) == 1);  // search for the existing element
-    assert(L.search(12) == 2);
-    assert(L.search(50) == -1);  // search for the non-existing element
+    assert(L_int.search(11) == 1);  // search for the existing element
+    assert(L_int.search(12) == 2);
+    assert(L_int.search(50) == -1);  // search for the non-existing element
+
+    // double type test
+    std::cout << "\n\nTEST double type" << std::endl;
+    // Insert testing
+    L_double.insert(1.1);
+    L_double.insert(1.2);
+    assert(L_double.size() == 2);
+    L_double.insert(1.5);
+    L_double.insert(1.0);
+    L_double.insert(1.2);
+    L_double.insert(2.0);
+    L_double.insert(1.8);
+    assert(L_double.size() == 7);
+    L_double.print_list();  // To print the array
+
+    // Remove testing
+    L_double.remove(1.2);  // Remove Duplicate value in the list
+    L_double.remove(1.5);  // Remove the existing value in the list
+    assert(L_double.size() == 5);
+    L_double.remove(5.0);  // Try to remove the non-existing value in the list
+    assert(L_double.size() == 5);
+
+    // LinearSearch testing
+    assert(L_double.search(1.1) == 0);  // search for the existing element
+    assert(L_double.search(1.2) == 2);
+    assert(L_double.search(5.0) == -1);  // search for the non-existing element
+
+    // Sort testing
+    L_double.sort();
+    assert(L_double.isSortedList() == true);
+    L_double.print_list();
+
+    // BinarySearch testing
+    assert(L_double.search(1.1) == 1);  // search for the existing element
+    assert(L_double.search(1.2) == 2);
+    assert(L_double.search(5.0) == -1);  // search for the non-existing element
 }
 
 /**
