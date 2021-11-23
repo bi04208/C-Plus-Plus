@@ -46,6 +46,7 @@ void data_structures::list<T>::push_back(T new_elem) {
         last->succ() = std::make_shared<link<T> >(new_elem);
         last = last->succ();
     }
+    list_size++;
 }
 
 /**
@@ -55,14 +56,15 @@ void data_structures::list<T>::push_back(T new_elem) {
 template <typename T>
 void data_structures::list<T>::push_front(T new_elem) {
     if (isEmpty()) {
-        first->succ() = std::make_shared<link>(new_elem);
+        first->succ() = std::make_shared<link<T> >(new_elem);
         last = first->succ();
     } else {
         std::shared_ptr<data_structures::link<T> > t =
-            std::make_shared<link>(new_elem);
+            std::make_shared<link<T> >(new_elem);
         t->succ() = first->succ();
         first->succ() = t;
     }
+    list_size++;
 }
 
 /**
@@ -93,6 +95,7 @@ void data_structures::list<T>::erase(T old_elem) {
     if (first == last) {
         last = nullptr;
     }
+    list_size--;
 }
 
 /**
@@ -107,9 +110,10 @@ void data_structures::list<T>::print_list() {
     }
     std::shared_ptr<link<T> > t = first;
     while (t->succ() != nullptr) {
-        std::cout << t->succ()->val() << "\t";
+        std::cout << t->succ()->val() << " ";
         t = t->succ();
     }
+    std::cout << std::endl;
 }
 
 /**
@@ -144,13 +148,15 @@ int data_structures::list<T>::search(T find_elem) {
  */
 int main() {
     data_structures::list<int> L_int;
+    data_structures::list<float> L_float;
 
-    std::cout << "\nTEST integer type" << std::endl;
+    std::cout << "\nTEST integer type\n" << std::endl;
     // Insert testing
     L_int.push_back(11);
     L_int.push_back(12);
     L_int.push_back(15);
     L_int.push_back(10);
+    L_int.print_list();
     assert(L_int.size() == 4);
 
     L_int.push_front(12);
@@ -165,11 +171,40 @@ int main() {
     assert(L_int.size() == 5);
     L_int.erase(50);  // Try to remove the non-existing value in the list
     assert(L_int.size() == 5);
+    L_int.print_list();
 
     // LinearSearch testing
-    assert(L_int.search(11) == 0);  // search for the existing element
-    assert(L_int.search(12) == 2);
+    assert(L_int.search(11) == 2);  // search for the existing element
+    assert(L_int.search(12) == 3);
     assert(L_int.search(50) == -1);  // search for the non-existing element
+
+    std::cout << "\nTEST float type\n" << std::endl;
+    // Insert testing
+    L_float.push_back(1.1);
+    L_float.push_back(1.42);
+    L_float.push_back(15.3);
+    L_float.push_back(10.1);
+    L_float.print_list();
+    assert(L_float.size() == 4);
+
+    L_float.push_front(0.12);
+    L_float.push_front(-20);
+    L_float.push_front(1.18);
+    assert(L_float.size() == 7);
+    L_float.print_list();  // To print the array
+
+    // Remove testing
+    L_float.erase(0.12);  
+    L_float.erase(15.3);  
+    assert(L_float.size() == 5);
+    L_float.erase(500);  // Try to remove the non-existing value in the list
+    assert(L_float.size() == 5);
+    L_float.print_list();
+
+    // LinearSearch testing
+    assert(L_float.search(1.1) == 2);  // search for the existing element
+    assert(L_float.search(1.42) == 3);
+    assert(L_float.search(50) == -1);  // search for the non-existing element
 
     return 0;
 }
